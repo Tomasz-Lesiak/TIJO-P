@@ -29,8 +29,8 @@ const errorText      = document.getElementById('errorText');
 
 // Code-review result elements
 const reviewResult    = document.getElementById('reviewResult');
-const scoreArc        = document.getElementById('scoreArc');
 const scoreValue      = document.getElementById('scoreValue');
+const scoreBar        = document.getElementById('scoreBar');
 const scoreLabel      = document.getElementById('scoreLabel');
 const reviewSummary   = document.getElementById('reviewSummary');
 const issuesCount     = document.getElementById('issuesCount');
@@ -47,9 +47,6 @@ const btnAuditQuality = document.getElementById('btnAuditQuality');
 const btnUnitTests    = document.getElementById('btnUnitTests');
 
 const ALL_BUTTONS = [btnAuditQuality, btnUnitTests];
-
-// ── Score circle constants ─────────────────────
-const SCORE_CIRCUMFERENCE = 2 * Math.PI * 38; // r=38
 
 // ── Utility ───────────────────────────────────
 function stripCodeFences(str) {
@@ -146,26 +143,26 @@ function showError(message) {
   errorText.textContent = message;
 }
 
-// ── Score circle updater ──────────────────────
+// ── Score bar updater ─────────────────────────
 function updateScoreCircle(score) {
-  const offset = SCORE_CIRCUMFERENCE * (1 - score / 100);
-  scoreArc.style.strokeDashoffset = offset;
-
-  let stroke, labelText, labelClass;
-  if (score >= 70) {
-    stroke = '#10b981'; labelText = 'Dobry kod'; labelClass = 'text-emerald-600 dark:text-emerald-400';
+  let barColor, labelText, labelClass;
+  if (score >= 75) {
+    barColor = 'bg-emerald-500'; labelText = 'Dobry kod'; labelClass = 'text-emerald-400';
   } else if (score >= 40) {
-    stroke = '#f59e0b'; labelText = 'Wymaga poprawy'; labelClass = 'text-amber-600 dark:text-amber-400';
+    barColor = 'bg-amber-500'; labelText = 'Wymaga poprawy'; labelClass = 'text-amber-400';
   } else {
-    stroke = '#ef4444'; labelText = 'Krytyczne problemy'; labelClass = 'text-red-600 dark:text-red-400';
+    barColor = 'bg-red-500'; labelText = 'Krytyczne problemy'; labelClass = 'text-red-400';
   }
 
-  scoreArc.setAttribute('stroke', stroke);
   scoreValue.textContent = score;
-  scoreValue.className = `text-2xl font-bold leading-none`;
-  scoreValue.style.color = stroke;
   scoreLabel.textContent = labelText;
-  scoreLabel.className = `text-xs font-semibold uppercase tracking-wider mb-1.5 ${labelClass}`;
+  scoreLabel.className = `text-2xl font-bold leading-tight ${labelClass}`;
+
+  scoreBar.className = `h-full rounded-full transition-all duration-700 ease-out ${barColor}`;
+  scoreBar.style.width = '0%';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => { scoreBar.style.width = `${score}%`; });
+  });
 }
 
 // ── Issue card builder ────────────────────────
