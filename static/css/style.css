@@ -1,0 +1,83 @@
+/* ── Custom scrollbar ─────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 99px; }
+.dark ::-webkit-scrollbar-thumb { background: #3730a3; }
+::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+/* ── Textarea font ───────────────────────── */
+#codeInput {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  tab-size: 2;
+}
+
+/* ── Prose tweaks for the details panel ──── */
+.prose pre {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+}
+.dark .prose pre {
+  background: #090c10;
+  border-color: #21262d;
+}
+.prose code:not(pre code) {
+  background: #eef2ff;
+  color: #4338ca;
+  padding: 0.15em 0.4em;
+  border-radius: 0.3em;
+  font-size: 0.875em;
+}
+.dark .prose code:not(pre code) {
+  background: #1e1b4b;
+  color: #a5b4fc;
+}
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.875rem;
+}
+.prose th {
+  background: #f1f5f9;
+  text-align: left;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid #e2e8f0;
+  font-weight: 600;
+}
+.dark .prose th {
+  background: #1e293b;
+  border-color: #334155;
+}
+.prose td {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+.dark .prose td { border-color: #334155; }
+.prose tr:nth-child(even) td { background: #f8fafc; }
+.dark .prose tr:nth-child(even) td { background: #0f172a; }
+
+/* ── Toast slide-in animation ────────────── */
+@keyframes slide-in {
+  from { opacity: 0; transform: translateX(120%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.animate-slide-in { animation: slide-in 0.25s ease-out forwards; }
+
+/* ── Button active press ─────────────────── */
+button:active:not(:disabled) { transform: scale(0.97); }
+
+/* ── Focus ring offset for dark mode ─────── */
+.dark *:focus-visible { outline-color: #818cf8; }
+
+/* ── Smooth transitions ──────────────────── */
+#resultSection, #loadingSpinner, #errorBox, #resultContent {
+  transition: opacity 0.2s ease;
+}
+
+/* ── hljs override: match our border-radius ─ */
+.hljs {
+  border-radius: 0.75rem;
+  padding: 1.25rem !important;
+}
